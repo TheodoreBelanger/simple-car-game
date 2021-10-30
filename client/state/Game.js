@@ -29,7 +29,8 @@ class Game extends Phaser.State {
     // Creates the world
     createWorld(this.game)
     // Connects the player to the server
-    socket = io(SERVER_IP)
+    // socket = io(SERVER_IP)
+    socket = io()
     // Creates the player passing the X, Y, game and socket as arguments
     this.player = player(Math.random() * width, Math.random() * height / 2, this.game, socket)
     // Creates the player name text

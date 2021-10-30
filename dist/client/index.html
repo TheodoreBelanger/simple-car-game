@@ -2,16 +2,79 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Simple Online Car Game</title>
+    <title>Talk Shit and Drive</title>
+   
     <style>
-      body, html {
-        margin: 0;
-        position: relative;
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      
+      #messages { 
+        list-style-type: none; 
+        margin: 0; 
+        padding: 0; 
+        /* position:absolute;
+        bottom: 0;  */
+        width: 100%;
+        height: 250px;} /* width:250px;   */
+      
+      #messages li { padding: 5px 10px;  background: rgb(0, 255, 255); }
+      #messages li:nth-child(odd) { background: #eee; }
+      #messagesDiv{
+        overflow: auto;
+        position: fixed; 
+        bottom: 5%;
+        height: 300px;
+        width: 100%;
       }
     </style>
-  </head>
-  <body>
+
     <script src="../vendor/phaser.min.js"></script>
     <script src="https://simple-car-game.herokuapp.com/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    
+    <!-- This script is used to update the clients message inbox -->
+    <script>
+      $(function(){
+        console.log("Initializing New Client");
+          //creates the socket.io connection to the server
+          const socket = io();
+
+          //Chat-box form submission listener
+          $('form').submit(function(e){
+              e.preventDefault();//prevents page reloading
+
+              //emit out to all the users message
+              console.log("Sumbitting message to server: "+ $('#m').val());
+              socket.emit('chat message', $('#m').val());
+              
+              //reset message string in clients UI form
+              $('#m').val('');
+              return false;
+          });
+          
+          //This listener gets other user messages and post on UI 
+          socket.on('chat message', function(msg){
+              $('#messages').append('<li>'+msg+'</li>');
+          })
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="chatbox">
+      <div id="messagesDiv">
+        <ul id="messages"></ul>
+      </div>
+
+      <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
   <script type="text/javascript" src="index.js"></script></body>
+  
+  <footer>
+  </footer>
 </html>

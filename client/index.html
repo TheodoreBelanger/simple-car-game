@@ -6,13 +6,29 @@
    
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      footer { font: 13px Helvetica, Arial; }
+      body { font: 13px Helvetica, Arial; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
+      
+      #messages { 
+        list-style-type: none; 
+        margin: 0; 
+        padding: 0; 
+        /* position:absolute;
+        bottom: 0;  */
+        width: 100%;
+        height: 250px;} /* width:250px;   */
+      
+      #messages li { padding: 5px 10px;  background: rgb(0, 255, 255); }
       #messages li:nth-child(odd) { background: #eee; }
+      #messagesDiv{
+        overflow: auto;
+        position: fixed; 
+        bottom: 5%;
+        height: 300px;
+        width: 100%;
+      }
     </style>
 
     <script src="../vendor/phaser.min.js"></script>
@@ -31,11 +47,8 @@
               e.preventDefault();//prevents page reloading
 
               //emit out to all the users message
-              console.log("Sumbitting message to server: "+ msg);
+              console.log("Sumbitting message to server: "+ $('#m').val());
               socket.emit('chat message', $('#m').val());
-
-              //update clients own ui with the message
-              $('#messages').append('<li>'+ $('#m').val()+'</li>');
               
               //reset message string in clients UI form
               $('#m').val('');
@@ -51,12 +64,11 @@
   </head>
 
   <body>
-    <div>
-      <ul id="messages">
-        <li>
-          "fucked"
-        </li>
-      </ul>
+    <div id="chatbox">
+      <div id="messagesDiv">
+        <ul id="messages"></ul>
+      </div>
+
       <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
       </form>

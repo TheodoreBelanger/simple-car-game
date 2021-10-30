@@ -29,20 +29,20 @@ export default function (x, y, game, socket) {
       }
 
       // Drive forward if W is pressed down
-      if (isDown(game, KEYS.W) && this.speed <= 9999) {
-        this.speed += 100
+      if (isDown(game, KEYS.W) && this.speed <= 500) {
+        this.speed += 25
       } else {
         if (this.speed >= 10) {
-          this.speed -= 25
+          this.speed -= 5
         }
       }
 
       // Drive backwards if S is pressed down
-      if (isDown(game, KEYS.S) && this.speed >= -9999) {
-        this.speed -= 99
+      if (isDown(game, KEYS.S) && this.speed >= -500) {
+        this.speed -= 25
       } else {
-        if (this.speed <= -9999) {
-          this.speed += 99
+        if (this.speed <= -10) {
+          this.speed += 5
         }
       }
 
@@ -94,8 +94,7 @@ export default function (x, y, game, socket) {
       // Capitalize the status text
       const capitalizedStatus = status[0].toUpperCase() + status.substring(1)
       let newText = ''
-      // Set the speed text to either 0 or the current speed
-      this[status] < 0 ? this.newText = 0 : this.newText = this[status]
+      this.newText = this[status]
       // Updates the text position and string
       text.x = x
       text.y = y

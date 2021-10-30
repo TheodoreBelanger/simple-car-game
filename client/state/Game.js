@@ -7,7 +7,9 @@ import newPlayer from './sockets/newPlayer'
 import updatePlayers from './sockets/updatePlayers'
 import playerMovementInterpolation from './predictions/playerMovementInterpolation'
 
-const SERVER_IP = 'http://18.189.196.59:8000/'
+const SERVER_IP = 'http://18.189.196.59:8000/'//ted dev server
+// const SERVER_IP = 'http://localhost:8000/'//general local dev
+
 let socket = null
 let otherPlayers = {}
 

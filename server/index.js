@@ -23,6 +23,11 @@ io.on('connection', socket => {
     io.emit('update-players', players)
   })
 
+  socket.on('chat message', function(msg){
+    console.log("Chat Message Bus: " + msg);
+    io.emit('chat message', msg);
+  })
+
   // When a player moves
   socket.on('move-player', data => {
     const { x, y, angle, playerName, speed } = data
